@@ -1,9 +1,8 @@
-var sprite = [40, 270, 30, 30];
+var sprite = [90, 270, 30, 30];
 var x = sprite[0];
 var y = sprite[1];
 var velocity = 0;
 var acceleration = 0;
-
 
 function drawSprite() {
   /*
@@ -30,21 +29,32 @@ function myKeyDown (event) {
   console.log(keyCode);
   console.log(keyStr);
 
-  if (keyStr == 'w') {
+  if ((keyStr == 'w') && (velocity == 0)) {
     acceleration = -0.1;
     velocity -= 4;
   }
 }
 
+function bottom() {
+  var bot = canvas.height - 30;
+  if (y > bot) {
+    y = bot;
+    acceleration = 0;
+    velocity = 0;
+  }
+}
 
 function gameStart() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   y += velocity;
   velocity -= acceleration;
   drawSprite();
-
+  bottom();
+  //obstacles.generateTerrain();
   window.requestAnimationFrame(gameStart);
+
 }
+
 
 // Get the canvas, set the width and height from the window
 canvas = document.getElementById("mainCanvas");
