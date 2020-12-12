@@ -1,16 +1,11 @@
-var x1 = 560;
-var y1 = 270;
-var obstacleMovement = -1;
-var r = Math.floor(Math.random() * 50)
-
-class obstacles {
-  constructor(x1, y1, 30, r) {
-    this.beginPath();
-    this.fillStyle = "ff0000";
-    this.fill();
+class Obstacle {
+  // Constructor takes parameters of the obstacle. This class creates a black
+  // rectangle which will act as an obstacle in the game in which the player will
+  // attempt to jump over. 
+  constructor (x1, y1, w, h) {
+    context.beginPath();
+    context.rect(x1, y1, w, h);
+    context.fillStyle = "#000000";
+    context.fill();
   }
-}
-
-generateTerrain() {
-  this.x1 += obstacleMovment;
 }

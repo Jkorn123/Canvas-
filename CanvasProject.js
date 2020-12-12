@@ -23,6 +23,7 @@ function myKeyDown (event) {
     Inputs: event.
     Returns: None.
   */
+  
   keyCode = event.which;
   keyStr = event.key;
   console.log(event);
@@ -36,6 +37,12 @@ function myKeyDown (event) {
 }
 
 function bottom() {
+  /*
+    Purpose: Checks if the spirte touches the bottom of the canvas.
+    Inputs: None.
+    Returns: None.
+  */
+
   var bot = canvas.height - 30;
   if (y > bot) {
     y = bot;
@@ -44,17 +51,27 @@ function bottom() {
   }
 }
 
+//function spriteCrash() {
+
+//}
+
 function gameStart() {
+  /*
+    Purpose: The main function that runs the entire game by implementing all the
+    functions.
+    Inputs: None.
+    Returns: None.
+  */
+
   context.clearRect(0, 0, canvas.width, canvas.height);
   y += velocity;
   velocity -= acceleration;
   drawSprite();
   bottom();
-  //obstacles.generateTerrain();
+  obstacle = new Obstacle(560, 270, 40, 30)
   window.requestAnimationFrame(gameStart);
 
 }
-
 
 // Get the canvas, set the width and height from the window
 canvas = document.getElementById("mainCanvas");
