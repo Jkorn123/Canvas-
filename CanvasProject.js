@@ -23,7 +23,7 @@ function myKeyDown (event) {
     Inputs: event.
     Returns: None.
   */
-  
+
   keyCode = event.which;
   keyStr = event.key;
   console.log(event);
@@ -42,7 +42,6 @@ function bottom() {
     Inputs: None.
     Returns: None.
   */
-
   var bot = canvas.height - 30;
   if (y > bot) {
     y = bot;
@@ -51,10 +50,6 @@ function bottom() {
   }
 }
 
-//function spriteCrash() {
-
-//}
-
 function gameStart() {
   /*
     Purpose: The main function that runs the entire game by implementing all the
@@ -62,15 +57,15 @@ function gameStart() {
     Inputs: None.
     Returns: None.
   */
-
   context.clearRect(0, 0, canvas.width, canvas.height);
   y += velocity;
   velocity -= acceleration;
   drawSprite();
   bottom();
-  obstacle = new Obstacle(560, 270, 40, 30)
+  obstacle = new Obstacle(570, 280, 40, 30);
+  obstacle.draw();
+  obstacle.moveObstacle();
   window.requestAnimationFrame(gameStart);
-
 }
 
 // Get the canvas, set the width and height from the window
