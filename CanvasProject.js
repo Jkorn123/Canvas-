@@ -1,8 +1,55 @@
+class Obstacle {
+  // Constructor takes parameters of the obstacle. This class creates a black
+  // rectangle which will act as an obstacle in the game in which the player will
+  // attempt to jump over.
+  constructor (x1, y1, w, h) {
+    var objX = this.x;
+    var objY = this.y;
+    var objVelocity = this.x_velocity;
+    this.x = x1;
+    this.y = y1;
+    this.width = w;
+    this.height = h;
+    this.color = "#000000";
+    this.x_velocity = -1.5;
+  }
+
+  draw() {
+    //Draws the Obstacle.
+    context.beginPath();
+    context.rect(this.x, this.y, this.width, this.height);
+    context.fillStyle = this.color;
+    context.fill();
+  }
+
+  moveObstacle() {
+    this.x += this.x_velocity;
+  }
+}
+
 var sprite = [90, 270, 30, 30];
 var x = sprite[0];
 var y = sprite[1];
 var velocity = 0;
 var acceleration = 0;
+
+function checkCrash() {
+  /*
+    Purpose: This function checks whether the sprite has crashed into the obstacle
+    and will determine whether the game is over or not.
+    Inputs: None.
+    Returns: None.
+  */
+  var spriteTopX = x + 30;
+  var spriteTopY = 270;
+  if (spriteTopX < objX && spriteTopY == objY ) {
+    spriteTopX = objX;
+    spriteTopY = objY;
+    acceleration = 0;
+    velocity = 0;
+    objVelocity = 0;
+  }
+}
 
 function drawSprite() {
   /*
@@ -62,10 +109,10 @@ function gameStart() {
   velocity -= acceleration;
   drawSprite();
   bottom();
-  obstacle = new Obstacle(570, 280, 40, 30);
-  obstacle.draw();
   obstacle.moveObstacle();
+  obstacle.draw();
   window.requestAnimationFrame(gameStart);
+
 }
 
 // Get the canvas, set the width and height from the window
@@ -78,4 +125,6 @@ canvas.style.border = "1px solid black";
 document.addEventListener("keydown", myKeyDown)
 // Set up the context for the animation
 context = canvas.getContext("2d");
+obstacle = new Obstacle(570, 270, 40, 30);
 window.requestAnimationFrame(gameStart);
+checkCrash();
