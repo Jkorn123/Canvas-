@@ -4,16 +4,12 @@ class Obstacle {
   // rectangle which will act as an obstacle in the game in which the player will
   // attempt to jump over.
   constructor (x1, y1, w, h) {
-    var obsX = this.x;
-    var obsY = this.y;
-    var obsXVelocity = this.x_velocity;
     this.x = x1;
     this.y = y1;
     this.width = w;
     this.height = h;
     this.color = "#000000";
     this.x_velocity = -1.5;
-    return obsX, obsY, obsXVelocity;
   }
 
   draw() {
@@ -27,6 +23,22 @@ class Obstacle {
   moveObstacle() {
     this.x += this.x_velocity;
   }
+
+  checkCrash() {
+    var spriteLeftTopX = x;
+    var spriteRightTopX = x + 30;
+    var spriteTopY = y;
+    var spriteBotY = y + 30;
+    var obsLeftX = this.x;
+    var obsRightX = this.x + 40;
+    var obsTopY = this.y;
+    var obsBotY = this.y + 30;
+
+    if ((spriteBotY < obsTopY) || (spriteTopY > obsBotY) ||
+    (spriteRightTopX < obsLeftX) || (spriteLeftTopX > obsRightX)) {
+      crash = true;
+    }
+  }
 }
 
 var sprite = [90, 270, 30, 30];
@@ -34,33 +46,7 @@ var x = sprite[0];
 var y = sprite[1];
 var velocity = 0;
 var acceleration = 0;
-
-function checkCrash(obsX, obsY, obsXVelocity) {
-  /*
-    Purpose: This function checks whether the sprite has crashed into the obstacle
-    and will determine whether the game is over or not.
-    Inputs: obsX (obstacle x coordinate), obsY (obstacle y coordinate), obsXVelocity
-    (velocity of the obstacle).
-    Returns: None.
-  */
-
-  var spriteRightTopX = x + 30;
-  var spriteRightTopY = 270;
-  var spriteBotY = y - 30;
-  var obsLeftBotX = obsX;
-  var obsLeftBotY = obsY - 30;
-
-  // Checks if the sprite's right side is touching the obstacle's left side.
-  if (spriteRightTopX > obsLeftBotX || spriteRightTopY > obsY) {
-    spriteRightTopX = obsLeftBotX;
-    spriteRightTopY = obsY;
-    obsXVelocity = 0;
-    velocity = 0;
-    acceleration = 0;
-  }
-
-  // Checks if the sprite's bottom side is touching the obstacle's top side. 
-}
+var crash = false;
 
 function drawSprite() {
   /*
@@ -122,8 +108,8 @@ function gameStart() {
   bottom();
   obstacle.moveObstacle();
   obstacle.draw();
+  obstacle.checkCrash();
   window.requestAnimationFrame(gameStart);
-
 }
 
 // Get the canvas, set the width and height from the window
@@ -138,4 +124,3 @@ document.addEventListener("keydown", myKeyDown)
 context = canvas.getContext("2d");
 obstacle = new Obstacle(570, 270, 40, 30);
 window.requestAnimationFrame(gameStart);
-checkCrash(obsX, obsY, obsXVelocity);
