@@ -51,12 +51,17 @@ function checkCrash(obsX, obsY, obsXVelocity) {
   var obsLeftBotY = obsY - 30;
 
   // Checks if the sprite's right side is touching the obstacle's left side.
-  if (spriteRightTopX > obsLeftBotX || spriteRightTopY == obsY) {
+  if (spriteRightTopX > obsLeftBotX || spriteRightTopY > obsY) {
+    spriteRightTopX = obsLeftBotX;
+    spriteRightTopY = obsY;
     obsXVelocity = 0;
     velocity = 0;
     acceleration = 0;
   }
+
+  // Checks if the sprite's bottom side is touching the obstacle's top side. 
 }
+
 function drawSprite() {
   /*
     Purpose: Draws the sprite.
@@ -133,3 +138,4 @@ document.addEventListener("keydown", myKeyDown)
 context = canvas.getContext("2d");
 obstacle = new Obstacle(570, 270, 40, 30);
 window.requestAnimationFrame(gameStart);
+checkCrash(obsX, obsY, obsXVelocity);
