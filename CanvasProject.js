@@ -1,17 +1,19 @@
+// Obstacle class.
 class Obstacle {
   // Constructor takes parameters of the obstacle. This class creates a black
   // rectangle which will act as an obstacle in the game in which the player will
   // attempt to jump over.
   constructor (x1, y1, w, h) {
-    var objX = this.x;
-    var objY = this.y;
-    var objVelocity = this.x_velocity;
+    var obsX = this.x;
+    var obsY = this.y;
+    var obsXVelocity = this.x_velocity;
     this.x = x1;
     this.y = y1;
     this.width = w;
     this.height = h;
     this.color = "#000000";
     this.x_velocity = -1.5;
+    return obsX, obsY, obsXVelocity;
   }
 
   draw() {
@@ -33,24 +35,28 @@ var y = sprite[1];
 var velocity = 0;
 var acceleration = 0;
 
-function checkCrash() {
+function checkCrash(obsX, obsY, obsXVelocity) {
   /*
     Purpose: This function checks whether the sprite has crashed into the obstacle
     and will determine whether the game is over or not.
-    Inputs: None.
+    Inputs: obsX (obstacle x coordinate), obsY (obstacle y coordinate), obsXVelocity
+    (velocity of the obstacle).
     Returns: None.
   */
-  var spriteTopX = x + 30;
-  var spriteTopY = 270;
-  if (spriteTopX < objX && spriteTopY == objY ) {
-    spriteTopX = objX;
-    spriteTopY = objY;
-    acceleration = 0;
+
+  var spriteRightTopX = x + 30;
+  var spriteRightTopY = 270;
+  var spriteBotY = y - 30;
+  var obsLeftBotX = obsX;
+  var obsLeftBotY = obsY - 30;
+
+  // Checks if the sprite's right side is touching the obstacle's left side.
+  if (spriteRightTopX > obsLeftBotX || spriteRightTopY == obsY) {
+    obsXVelocity = 0;
     velocity = 0;
-    objVelocity = 0;
+    acceleration = 0;
   }
 }
-
 function drawSprite() {
   /*
     Purpose: Draws the sprite.
@@ -127,4 +133,3 @@ document.addEventListener("keydown", myKeyDown)
 context = canvas.getContext("2d");
 obstacle = new Obstacle(570, 270, 40, 30);
 window.requestAnimationFrame(gameStart);
-checkCrash();
