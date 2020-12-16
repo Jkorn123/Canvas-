@@ -114,6 +114,10 @@ function gameStart() {
     obstacle.moveObstacle();
     obstacle.draw();
     obstacle.checkCrash();
+  } else {
+    // Game over text.
+    context.font = "20px Courier";
+    context.fillText("Game Over!", 240, 150);
   }
   window.requestAnimationFrame(gameStart);
 }
