@@ -33,10 +33,17 @@ class Obstacle {
     var obsRightX = this.x + 40;
     var obsTopY = this.y;
     var obsBotY = this.y + 30;
-
-    if ((spriteBotY < obsTopY) || (spriteTopY > obsBotY) ||
-    (spriteRightTopX < obsLeftX) || (spriteLeftTopX > obsRightX)) {
-      crash = true;
+    if ((spriteRightTopX >= obsLeftX) && (spriteRightTopX <= obsRightX)) {
+      if ((spriteBotY >= obsTopY)) {
+        crash = true;
+        console.log(crash);
+      }
+    }
+    if ((spriteLeftTopX <= obsRightX) && (spriteLeftTopX >= obsLeftX)) {
+      if ((spriteBotY >= obsTopY)) {
+        crash = true;
+        console.log(crash);
+      }
     }
   }
 }
@@ -70,9 +77,6 @@ function myKeyDown (event) {
 
   keyCode = event.which;
   keyStr = event.key;
-  console.log(event);
-  console.log(keyCode);
-  console.log(keyStr);
 
   if ((keyStr == 'w') && (velocity == 0)) {
     acceleration = -0.1;
@@ -98,26 +102,28 @@ function gameStart() {
   /*
     Purpose: The main function that runs the entire game by implementing all the
     functions.
-    Inputs: None.
+    Inputs: crash (checking whether the two objects crashed into each other).
     Returns: None.
   */
   context.clearRect(0, 0, canvas.width, canvas.height);
-  y += velocity;
-  velocity -= acceleration;
-  drawSprite();
-  bottom();
-  obstacle.moveObstacle();
-  obstacle.draw();
-  obstacle.checkCrash();
+  if (crash != true) {
+    y += velocity;
+    velocity -= acceleration;
+    drawSprite();
+    bottom();
+    obstacle.moveObstacle();
+    obstacle.draw();
+    obstacle.checkCrash();
+  }
   window.requestAnimationFrame(gameStart);
 }
 
 // Get the canvas, set the width and height from the window
-canvas = document.getElementById("mainCanvas");
-// I found that - 20 worked well for me, YMMV
-canvas.width = 600;
-canvas.height = 300;
-canvas.style.border = "1px solid black";
+canvas = document.getElementById("mainCanvas")
+
+canvas.width = 600
+canvas.height = 300
+canvas.style.border = "1px solid black"
 
 document.addEventListener("keydown", myKeyDown)
 // Set up the context for the animation
