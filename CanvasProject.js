@@ -9,8 +9,9 @@ class Obstacle {
     this.width = w;
     this.height = h;
     this.color = "#000000";
-    this.x_velocity = -1.5;
+    this.x_velocity = -3;
   }
+
 
   draw() {
     //Draws the Obstacle.
@@ -22,6 +23,7 @@ class Obstacle {
 
   moveObstacle() {
     this.x += this.x_velocity;
+
   }
 
   checkCrash() {
@@ -54,6 +56,7 @@ var y = sprite[1];
 var velocity = 0;
 var acceleration = 0;
 var crash = false;
+var addObstacles = [];
 
 function drawSprite() {
   /*
@@ -111,19 +114,28 @@ function gameStart() {
     velocity -= acceleration;
     drawSprite();
     bottom();
-    obstacle.moveObstacle();
+
     obstacle.draw();
+    obstacle.moveObstacle();
     obstacle.checkCrash();
+
   } else {
     // Game over text.
     context.font = "20px Courier";
     context.fillText("Game Over!", 240, 150);
   }
+  // Redraws the obstacle after the sprite reaches the end of the screen.
+  if (obstacle.x < 0) {
+    obstacle.x = 570;
+  }
+
   window.requestAnimationFrame(gameStart);
+
 }
 
-// Get the canvas, set the width and height from the window
+// Get the canvas, set the width and height from the window.
 canvas = document.getElementById("mainCanvas")
+// Gets the frames for the canvas.
 
 canvas.width = 600
 canvas.height = 300
